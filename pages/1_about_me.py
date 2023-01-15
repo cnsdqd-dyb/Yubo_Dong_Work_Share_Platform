@@ -10,4 +10,4 @@ st.set_page_config(
     }
 )
 
-st.markdown("Home")
+st.markdown("about me")
