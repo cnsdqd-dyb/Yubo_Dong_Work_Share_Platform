@@ -2,3 +2,5 @@
 mysql-connector-python==8.0.31
 streamlit==1.15.2
 streamlit-lottie==0.0.3
+svglib==1.5.1
+cairosvg==2.6.0
