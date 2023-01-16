@@ -4,3 +4,4 @@ streamlit==1.15.2
 streamlit-lottie==0.0.3
 svglib==1.5.1
 cairosvg==2.6.0
+openai==0.26.1

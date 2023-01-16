@@ -5,3 +5,4 @@
 .idea/
 app.py
 example_for_learn/
+.streamlit/secrets.toml

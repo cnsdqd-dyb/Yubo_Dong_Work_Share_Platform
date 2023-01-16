@@ -1,4 +1,7 @@
+import time
+import scripts.st_temp_scripts as stt
 import streamlit as st
+import openai
 import scripts.st_better_img as stimg
 def top_line():
     tab1, tab2, tab3 = st.tabs(["🎂我的主页", "🍰我的研究", "🍭我的应用"])
@@ -40,3 +43,55 @@ def self_intro():
             st.caption("## 人工智能研究者")
             with st.expander("人工智能研究者"):
                 st.caption("more ...")
+
+class DoubleChatUI():
+    def __init__(self,start_prompt="人类：你好！AI：你好！人类：接下来我们来进行一段友好的交流！AI：",key=time.time()):
+        openai.api_key = st.secrets["SWEETS"].OPENAI_API_KEY
+        self.start_prompt = start_prompt
+        self.hash_text = str(hash(key))+'.txt'
+        self.hash_textAI = str(hash(key))+'AI.txt'
+        self.R = []
+        self.L = []
+    def read_data(self):
+        self.L = stt.read(self.hash_text).split('@')
+        self.R = stt.read(self.hash_textAI).split('@')
+        if self.L and self.R:
+            for idx in range(max(len(self.L),len(self.R))):
+                if idx < len(self.L):
+                    c1,c2 = st.columns(2)
+                    with c1:
+                        st.markdown(self.L[idx])
+                    st.markdown('------')
+                if idx < len(self.R):
+                    c1,c2 = st.columns(2)
+                    with c2:
+                        st.markdown(self.R[idx])
+                    st.markdown('------')
+
+    def clear_data(self):
+        stt.clear(self.hash_text)
+        stt.clear(self.hash_textAI)
+
+    def chat_for(self,prompt="Create an outline for an essay about Nikola Tesla and his contributions to technology:",
+                 temperature=0.9):
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt,
+            temperature=temperature,
+            max_tokens=300,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.6
+        )
+        return response['choices'][0]['text']
+
+    def chat(self):
+        self.read_data()
+        text = st.text_input(" ... ")
+        if len(text)>0:
+            res = self.chat_for(prompt=text)
+            st.markdown(res)
+            if len(text) > 0:
+                stt.add(self.hash_text, text+"@")
+            if len(res) > 0:
+                stt.add(self.hash_textAI, res+"@")
