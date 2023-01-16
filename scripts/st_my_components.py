@@ -18,7 +18,7 @@ def my_cv():
 def left_right():
     text,img = st.columns(2)
     with text:
-        st.markdown("# 有朋自远方来，不亦说乎！")
+        st.markdown("# 有朋自远方来，不亦乐乎！")
         st.caption("## Welcome my friend!")
     with img:
         #stimg.render_svg('src/svg/1876.svg')

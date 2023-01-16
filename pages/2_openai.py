@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     login = False
     name = st.text_input("用户名")
-    if name == 'dyb':
+    if name == 'dyb' or name == 'zxh':
         st.success("欢迎")
         chatui = st_cp.DoubleChatUI(key=name)
         chatui.chat()
