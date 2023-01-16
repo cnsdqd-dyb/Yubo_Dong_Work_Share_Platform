@@ -57,16 +57,14 @@ class DoubleChatUI():
         self.R = stt.read(self.hash_textAI).split('@')
         if self.L and self.R:
             for idx in range(max(len(self.L),len(self.R))):
-                if idx < len(self.L):
+                if idx < len(self.L) and len(self.L[idx]) > 2:
                     c1,c2 = st.columns(2)
                     with c1:
-                        st.markdown(self.L[idx])
-                    st.markdown('------')
-                if idx < len(self.R):
+                        st.markdown('🧔:'+self.L[idx])
+                if idx < len(self.R) and len(self.R[idx]) > 2:
                     c1,c2 = st.columns(2)
                     with c2:
-                        st.markdown(self.R[idx])
-                    st.markdown('------')
+                        st.markdown('🤖:'+self.R[idx])
 
     def clear_data(self):
         stt.clear(self.hash_text)
@@ -78,7 +76,7 @@ class DoubleChatUI():
             model="text-davinci-003",
             prompt=prompt,
             temperature=temperature,
-            max_tokens=300,
+            max_tokens=3000,
             top_p=1.0,
             frequency_penalty=0.0,
             presence_penalty=0.6
@@ -87,7 +85,7 @@ class DoubleChatUI():
 
     def chat(self):
         self.read_data()
-        text = st.text_input(" ... ")
+        text = st.text_input("🧔输入：")
         if len(text)>0:
             res = self.chat_for(prompt=text)
             st.markdown(res)
@@ -95,3 +93,6 @@ class DoubleChatUI():
                 stt.add(self.hash_text, text+"@")
             if len(res) > 0:
                 stt.add(self.hash_textAI, res+"@")
+        del_bt = st.button('🗑删除')
+        if del_bt:
+            self.clear_data()

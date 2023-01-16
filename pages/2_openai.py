@@ -20,10 +20,14 @@ if __name__ == '__main__':
         stimg.load_lottieurl('https://assets7.lottiefiles.com/packages/lf20_4kmUDEKo63.json')
     st_cp.top_line()
 
-    name = st.text_input("user_name")
+    login = False
+    name = st.text_input("用户名")
     if name == 'dyb':
+        st.success("欢迎")
         chatui = st_cp.DoubleChatUI(key=name)
         chatui.chat()
+    elif name != '':
+        st.error("不合法的用户登录!")
 
 
 

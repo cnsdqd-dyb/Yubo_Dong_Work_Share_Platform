@@ -42,7 +42,9 @@ def add(path,str):
         f.write(str)
         f.close()
 def clear(path):
-    os.remove(path)
+    with open(path, 'w+') as f:
+        f.truncate(0)
+        f.close()
 def write(path,str):
     with open(path, 'w+') as f:
         f.write(str)
